@@ -6,6 +6,7 @@ function App() {
   const [queueUrl, setQueueUrl] = useState("");
   const [messageBody, setMessageBody] = useState("");
   const [response, setResponse] = useState("");
+  const [response2, setPurgeResponse] = useState("");
 
   const sendMessage = async () => {
     try {
@@ -14,8 +15,25 @@ function App() {
         messageBody,
       });
       setResponse(response.data.message);
+      setTimeout(() => {
+        setResponse("");
+      }, 5000);
     } catch (error) {
       setResponse("An error occurred");
+    }
+  };
+
+  const purgeQueue = async () => {
+    try {
+      const response = await axios.post("http://localhost:3001/purge-queue", {
+        queueUrl,
+      });
+      setPurgeResponse(response.data.message);
+      setTimeout(() => {
+        setPurgeResponse("");
+      }, 5000);
+    } catch (error) {
+      setPurgeResponse("An error occurred");
     }
   };
 
@@ -25,6 +43,7 @@ function App() {
       <label>
         <h4>Queue URL: </h4>
         <input
+          placeholder="Enter the queue url"
           className="queue-link"
           type="text"
           value={queueUrl}
@@ -34,6 +53,7 @@ function App() {
       <label>
         <h4>Message Body:</h4>
         <textarea
+          placeholder="Enter the message body"
           className="message-textarea"
           value={messageBody}
           onChange={(e) => setMessageBody(e.target.value)}
@@ -43,10 +63,13 @@ function App() {
         Send Message
       </button>
       <p>{response}</p>
+
+      <button className="purge-button" onClick={purgeQueue}>
+        Purge Queue
+      </button>
+      <p>{response2}</p>
     </div>
   );
 }
 
 export default App;
-
-

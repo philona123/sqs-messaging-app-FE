@@ -29,7 +29,18 @@
 }
 
 .send-button {
-  background-color: green; /* Change to your desired color */
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.purge-button {
+  background-color: red;
   color: white;
   border: none;
   padding: 10px 20px;
